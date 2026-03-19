@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpeakUp — Онлайн-школа английского</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #0D9488;
+  --teal-light: #14B8A6;
+  --teal-bg: #F0FDFA;
+  --orange: #F97316;
+  --orange-light: #FFF7ED;
+  --bg: #FAFBFC;
+  --white: #FFFFFF;
+  --dark: #0F172A;
+  --text: #334155;
+  --text-light: #64748B;
+  --border: #E2E8F0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.logo span { color: var(--teal); }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--teal); }
+
+.nav-cta {
+  padding: 10px 24px;
+  background: var(--teal);
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-left h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+
+.hero-left h1 .teal { color: var(--teal); }
+.hero-left h1 .underline {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 4px;
+}
+
+.hero-left p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.hero-buttons { display: flex; gap: 1rem; align-items: center; margin-bottom: 2.5rem; }
+
+.btn-main {
+  padding: 16px 32px;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+}
+
+.btn-main:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(13,148,136,0.25); }
+
+.btn-secondary {
+  padding: 16px 32px;
+  background: var(--white);
+  color: var(--dark);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+}
+
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatars { display: flex; }
+
+.avatars .av {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-left: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+}
+
+.avatars .av:first-child { margin-left: 0; }
+.av-1 { background: var(--teal); }
+.av-2 { background: var(--orange); }
+.av-3 { background: #8B5CF6; }
+.av-4 { background: #EC4899; }
+
+.social-proof .text { font-size: 0.85rem; color: var(--text-light); }
+.social-proof .text strong { color: var(--dark); }
+
+/* Hero right - visual card */
+.hero-right {
+  position: relative;
+}
+
+.lesson-card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.lesson-card::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 100px; height: 100px;
+  background: var(--orange-light);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #FEE2E2;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #DC2626;
+}
+
+.live-dot {
+  width: 8px; height: 8px;
+  background: #DC2626;
+  border-radius: 50%;
+  animation: livePulse 1.5s infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.lesson-level {
+  padding: 6px 14px;
+  background: var(--teal-bg);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.lesson-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.lesson-teacher {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.chat-bubbles { display: flex; flex-direction: column; gap: 12px; }
+
+.bubble {
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  max-width: 85%;
+  line-height: 1.5;
+  animation: bubbleIn 0.4s ease-out both;
+}
+
+.bubble:nth-child(1) { animation-delay: 0.5s; }
+.bubble:nth-child(2) { animation-delay: 1.2s; }
+.bubble:nth-child(3) { animation-delay: 1.9s; }
+
+.bubble.teacher {
+  background: var(--teal-bg);
+  color: var(--teal);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+
+.bubble.student {
+  background: var(--orange-light);
+  color: #C2410C;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.floating-badge {
+  position: absolute;
+  background: white;
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.badge-streak {
+  bottom: -20px; left: -30px;
+  color: var(--orange);
+}
+
+.badge-progress {
+  top: 40px; right: -40px;
+  color: var(--teal);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+}
+
+.stats-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+
+.stat-label { font-size: 0.85rem; color: var(--text-light); }
+
+/* LEVELS */
+.levels {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.levels h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.levels > p {
+  text-align: center;
+  color: var(--text-light);
+  margin-bottom: 3rem;
+  font-size: 1rem;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.level-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.level-card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(13,148,136,0.1); }
+
+.level-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+.level-name { font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.3rem; }
+.level-desc { font-size: 0.85rem; color: var(--text-light); line-height: 1.5; margin-bottom: 1rem; }
+
+.level-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--teal-bg);
+  color: var(--teal);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 100px;
+}
+
+/* HOW IT WORKS */
+.how {
+  background: var(--teal-bg);
+  padding: 5rem 2rem;
+}
+
+.how-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.how h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--dark);
+  margin-bottom: 3rem;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.step-num {
+  width: 56px; height: 56px;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0 auto 1rem;
+}
+
+.step h3 { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+.step p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
+
+/* TESTIMONIALS */
+.reviews {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.reviews h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--dark);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.review-stars { color: #FBBF24; font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+.review-text { font-size: 0.95rem; color: var(--text); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic; }
+
+.review-author { display: flex; align-items: center; gap: 12px; }
+
+.review-av {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.review-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+.review-detail { font-size: 0.8rem; color: var(--text-light); }
+
+/* CTA */
+.cta {
+  background: var(--dark);
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(13,148,136,0.15), transparent 70%);
+}
+
+.cta h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.cta p {
+  color: #94A3B8;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.cta .btn-main {
+  font-size: 1.1rem;
+  padding: 18px 40px;
+  position: relative;
+}
+
+footer {
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: 1fr; }
+  .floating-badge { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Speak<span>Up</span></a>
+  <ul class="nav-links">
+    <li><a href="#levels">Уровни</a></li>
+    <li><a href="#how">Как это работает</a></li>
+    <li><a href="#reviews">Отзывы</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Бесплатный урок</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Заговори на <span class="teal">английском</span> за <span class="underline">3 месяца</span></h1>
+    <p>Онлайн-уроки с носителями языка. Разговорная практика с первого дня. Гибкое расписание под ваш график</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-main">Записаться бесплатно</a>
+      <a href="#levels" class="btn-secondary">Определить уровень</a>
+    </div>
+    <div class="social-proof">
+      <div class="avatars">
+        <div class="av av-1">А</div>
+        <div class="av av-2">М</div>
+        <div class="av av-3">К</div>
+        <div class="av av-4">Д</div>
+      </div>
+      <div class="text"><strong>4 800+</strong> студентов уже учатся</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="lesson-card">
+      <div class="lesson-header">
+        <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+        <div class="lesson-level">B1 Intermediate</div>
+      </div>
+      <div class="lesson-title">Travel & Adventures</div>
+      <div class="lesson-teacher">Преподаватель: Sarah Johnson, UK</div>
+      <div class="chat-bubbles">
+        <div class="bubble teacher">What's the most interesting place you've ever visited? 🌍</div>
+        <div class="bubble student">I went to Altai last summer. The mountains were breathtaking!</div>
+        <div class="bubble teacher">Great use of "breathtaking"! Can you describe what you saw? ✨</div>
+      </div>
+    </div>
+    <div class="floating-badge badge-streak">🔥 Серия: 14 дней</div>
+    <div class="floating-badge badge-progress">📈 +2 уровня за 3 мес</div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div><div class="stat-num">4 800+</div><div class="stat-label">Студентов</div></div>
+    <div><div class="stat-num">120+</div><div class="stat-label">Преподавателей</div></div>
+    <div><div class="stat-num">94%</div><div class="stat-label">Довольны результатом</div></div>
+    <div><div class="stat-num">3 мес</div><div class="stat-label">До первых результатов</div></div>
+  </div>
+</div>
+
+<section class="levels" id="levels">
+  <h2>Программы для любого уровня</h2>
+  <p>Начните с того места, где вы сейчас находитесь</p>
+  <div class="levels-grid">
+    <div class="level-card">
+      <div class="level-emoji">🌱</div>
+      <div class="level-name">Beginner</div>
+      <div class="level-desc">С нуля до базового общения. Алфавит, простые фразы, основы грамматики</div>
+      <div class="level-tag">A1-A2</div>
+    </div>
+    <div class="level-card">
+      <div class="level-emoji">🚀</div>
+      <div class="level-name">Intermediate</div>
+      <div class="level-desc">Свободное общение на бытовые темы. Путешествия, работа, хобби</div>
+      <div class="level-tag">B1-B2</div>
+    </div>
+    <div class="level-card">
+      <div class="level-emoji">⭐</div>
+      <div class="level-name">Advanced</div>
+      <div class="level-desc">Сложные темы, деловой английский, подготовка к IELTS/TOEFL</div>
+      <div class="level-tag">C1-C2</div>
+    </div>
+    <div class="level-card">
+      <div class="level-emoji">💼</div>
+      <div class="level-name">Business</div>
+      <div class="level-desc">Переговоры, презентации, деловая переписка, корпоративные тренинги</div>
+      <div class="level-tag">B2+</div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="how-inner">
+    <h2>Как начать учиться?</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Пройдите тест</h3>
+        <p>Бесплатное тестирование за 10 минут определит ваш текущий уровень</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Пробный урок</h3>
+        <p>Познакомьтесь с преподавателем и методикой на бесплатном занятии</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Начните говорить</h3>
+        <p>Выберите удобное расписание и начните путь к свободному английскому</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <h2>Истории студентов</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«За 4 месяца прошла собеседование в международную компанию на английском. Полгода назад я не могла связать двух слов!»</div>
+      <div class="review-author">
+        <div class="review-av" style="background:var(--teal)">МА</div>
+        <div><div class="review-name">Мария А.</div><div class="review-detail">Маркетолог, B2 за 4 месяца</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Наконец-то понимаю фильмы без субтитров! Метод работает — говоришь с первого урока, а не зубришь грамматику месяцами.»</div>
+      <div class="review-author">
+        <div class="review-av" style="background:var(--orange)">ИВ</div>
+        <div><div class="review-name">Игорь В.</div><div class="review-detail">Программист, A2 → B1</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Ребёнку 12 лет, занимается с удовольствием. За 3 месяца стал лучшим в классе по английскому. Преподаватели — огонь!»</div>
+      <div class="review-author">
+        <div class="review-av" style="background:#8B5CF6">ОН</div>
+        <div><div class="review-name">Ольга Н.</div><div class="review-detail">Мама ученика</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Первый урок — <span style="color:var(--teal-light)">бесплатно</span></h2>
+  <p>Определим ваш уровень, подберём программу и преподавателя</p>
+  <a href="#" class="btn-main">Записаться на бесплатный урок</a>
+</section>
+
+<footer>
+  <p>© 2026 SpeakUp. Онлайн-школа английского языка. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

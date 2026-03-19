@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФинПульс — Финансовый советник</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D48B;
+  --dark: #0A0E17;
+  --dark-card: #111827;
+  --dark-surface: #1A2332;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --green: #22C55E;
+  --red: #EF4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* === HERO === */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  background: 
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%),
+    var(--dark);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  background: rgba(201,168,76,0.05);
+  animation: fadeDown 0.8s ease-out;
+}
+
+.hero-badge span {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  animation: fadeDown 0.8s ease-out 0.15s both;
+}
+
+.hero h1 .gold { color: var(--gold); }
+
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  animation: fadeDown 0.8s ease-out 0.3s both;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeDown 0.8s ease-out 0.45s both;
+}
+
+.btn-primary {
+  padding: 16px 36px;
+  background: linear-gradient(135deg, var(--gold), #B8943F);
+  color: var(--dark);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.3); }
+
+.btn-outline {
+  padding: 16px 36px;
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === TICKER === */
+.ticker-wrap {
+  background: var(--dark-card);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  padding: 1rem 0;
+  overflow: hidden;
+}
+
+.ticker {
+  display: flex;
+  gap: 3rem;
+  animation: scroll 25s linear infinite;
+  width: max-content;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.ticker-item .symbol { color: var(--text); }
+.ticker-item .price { color: var(--text-muted); }
+.ticker-item .change.up { color: var(--green); }
+.ticker-item .change.down { color: var(--red); }
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* === STATS === */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: rgba(201,168,76,0.1);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  background: var(--dark);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.stat-card .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* === SERVICES === */
+.services {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 3.5rem;
+  line-height: 1.15;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.service-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 2.5rem;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-4px); }
+.service-card:hover::before { opacity: 1; }
+
+.service-icon {
+  width: 56px; height: 56px;
+  background: rgba(201,168,76,0.1);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* === CALCULATOR === */
+.calculator-section {
+  padding: 6rem 2rem;
+  background: var(--dark-card);
+}
+
+.calc-container {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.calc-box {
+  background: var(--dark-surface);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 24px;
+  padding: 3rem;
+  margin-top: 2.5rem;
+}
+
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.calc-row label {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.calc-input {
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-family: 'DM Sans', sans-serif;
+  width: 180px;
+  text-align: right;
+  transition: border-color 0.3s;
+}
+
+.calc-input:focus { outline: none; border-color: var(--gold); }
+
+.calc-result {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.calc-result .amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.calc-result .subtitle {
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* === TESTIMONIALS === */
+.testimonials {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.testimonial-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 2.5rem;
+}
+
+.stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+
+.testimonial-card .text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.author-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #8B6E2F);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+
+.author-name { font-weight: 600; font-size: 0.95rem; }
+.author-role { font-size: 0.8rem; color: var(--text-muted); }
+
+/* === CTA === */
+.cta {
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201,168,76,0.1) 0%, transparent 70%),
+    var(--dark);
+}
+
+.cta h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* === FOOTER === */
+footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .calc-row { flex-direction: column; gap: 0.5rem; align-items: stretch; }
+  .calc-input { width: 100%; text-align: left; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-badge"><span></span> Приём клиентов открыт</div>
+  <h1>Ваши деньги<br>должны <span class="gold">работать</span></h1>
+  <p>Персональные финансовые стратегии, инвестиционное планирование и управление капиталом для тех, кто ценит системный подход</p>
+  <div class="hero-buttons">
+    <a href="#calc" class="btn-primary">Рассчитать доходность</a>
+    <a href="#services" class="btn-outline">Узнать больше</a>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><span class="symbol">MOEX</span><span class="price">3 284.50</span><span class="change up">+1.2%</span></div>
+    <div class="ticker-item"><span class="symbol">USD/RUB</span><span class="price">88.45</span><span class="change down">-0.3%</span></div>
+    <div class="ticker-item"><span class="symbol">BTC</span><span class="price">$94 520</span><span class="change up">+2.8%</span></div>
+    <div class="ticker-item"><span class="symbol">Золото</span><span class="price">$2 645</span><span class="change up">+0.6%</span></div>
+    <div class="ticker-item"><span class="symbol">S&P500</span><span class="price">5 890.20</span><span class="change up">+0.9%</span></div>
+    <div class="ticker-item"><span class="symbol">EUR/RUB</span><span class="price">96.12</span><span class="change down">-0.1%</span></div>
+    <div class="ticker-item"><span class="symbol">MOEX</span><span class="price">3 284.50</span><span class="change up">+1.2%</span></div>
+    <div class="ticker-item"><span class="symbol">USD/RUB</span><span class="price">88.45</span><span class="change down">-0.3%</span></div>
+    <div class="ticker-item"><span class="symbol">BTC</span><span class="price">$94 520</span><span class="change up">+2.8%</span></div>
+    <div class="ticker-item"><span class="symbol">Золото</span><span class="price">$2 645</span><span class="change up">+0.6%</span></div>
+    <div class="ticker-item"><span class="symbol">S&P500</span><span class="price">5 890.20</span><span class="change up">+0.9%</span></div>
+    <div class="ticker-item"><span class="symbol">EUR/RUB</span><span class="price">96.12</span><span class="change down">-0.1%</span></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><div class="number">340+</div><div class="label">Клиентов</div></div>
+  <div class="stat-card"><div class="number">₽2.1 млрд</div><div class="label">Под управлением</div></div>
+  <div class="stat-card"><div class="number">24%</div><div class="label">Средняя доходность</div></div>
+  <div class="stat-card"><div class="number">8 лет</div><div class="label">На рынке</div></div>
+</div>
+
+<section class="services" id="services">
+  <div class="section-label">Услуги</div>
+  <h2 class="section-title">Комплексный подход<br>к вашему капиталу</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Инвестиционный портфель</h3>
+      <p>Формирование диверсифицированного портфеля с учётом вашего профиля риска, горизонта и целей</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛡️</div>
+      <h3>Защита капитала</h3>
+      <p>Стратегии хеджирования, страхование рисков и структурирование активов для сохранения wealth</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📈</div>
+      <h3>Финансовое планирование</h3>
+      <p>Долгосрочная стратегия: от накоплений до пенсионного плана и передачи капитала</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <h3>Недвижимость</h3>
+      <p>Анализ рынка, подбор объектов для инвестиций, расчёт доходности и управление активами</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💼</div>
+      <h3>Налоговая оптимизация</h3>
+      <p>Легальные способы снижения налоговой нагрузки: ИИС, льготы, выбор юрисдикций</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <h3>Обучение</h3>
+      <p>Индивидуальные и групповые программы финансовой грамотности для начинающих инвесторов</p>
+    </div>
+  </div>
+</section>
+
+<section class="calculator-section" id="calc">
+  <div class="calc-container">
+    <div class="section-label">Калькулятор</div>
+    <h2 class="section-title">Сколько вы можете заработать?</h2>
+    <div class="calc-box">
+      <div class="calc-row">
+        <label>Начальная сумма</label>
+        <input type="text" class="calc-input" id="initial" value="500 000" oninput="calculate()">
+      </div>
+      <div class="calc-row">
+        <label>Ежемесячное пополнение</label>
+        <input type="text" class="calc-input" id="monthly" value="30 000" oninput="calculate()">
+      </div>
+      <div class="calc-row">
+        <label>Срок (лет)</label>
+        <input type="text" class="calc-input" id="years" value="5" oninput="calculate()">
+      </div>
+      <div class="calc-result">
+        <div class="amount" id="result">₽3 847 200</div>
+        <div class="subtitle">Прогнозируемая стоимость портфеля</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-label">Отзывы</div>
+  <h2 class="section-title">Что говорят клиенты</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="text">«За 2 года портфель вырос на 47%. Наконец-то я перестал хранить деньги под подушкой и начал понимать, как работают инвестиции.»</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">АМ</div>
+        <div><div class="author-name">Андрей М.</div><div class="author-role">Предприниматель</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="text">«Грамотное планирование помогло накопить на квартиру за 3 года вместо 7. Всё прозрачно, никаких скрытых комиссий.»</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">ЕК</div>
+        <div><div class="author-name">Елена К.</div><div class="author-role">IT-менеджер</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="text">«Лучшее вложение — в знания. Курс по финграмотности полностью изменил мой подход к деньгам. Рекомендую всем.»</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">ДС</div>
+        <div><div class="author-name">Дмитрий С.</div><div class="author-role">Врач</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Начните <span style="color:var(--gold)">инвестировать</span><br>в своё будущее</h2>
+  <p>Бесплатная консультация 30 минут. Разберём вашу ситуацию и составим план действий</p>
+  <a href="#" class="btn-primary">Записаться на консультацию</a>
+</section>
+
+<footer>
+  <p>© 2026 ФинПульс. Все права защищены. Не является инвестиционной рекомендацией.</p>
+</footer>
+
+<script>
+function parseNum(str) {
+  return parseInt(str.replace(/\s/g, '')) || 0;
+}
+function formatNum(n) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+function calculate() {
+  const initial = parseNum(document.getElementById('initial').value);
+  const monthly = parseNum(document.getElementById('monthly').value);
+  const years = parseNum(document.getElementById('years').value);
+  const rate = 0.20;
+  const monthlyRate = rate / 12;
+  const months = years * 12;
+  let total = initial;
+  for (let i = 0; i < months; i++) {
+    total = total * (1 + monthlyRate) + monthly;
+  }
+  document.getElementById('result').textContent = '₽' + formatNum(Math.round(total));
+}
+</script>
+
+</body>
+</html>

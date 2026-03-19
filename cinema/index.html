@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КиноСфера — Онлайн-кинотеатр</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --crimson: #E11D48;
+  --crimson-dark: #BE123C;
+  --bg: #09090B;
+  --card: #18181B;
+  --surface: #27272A;
+  --text: #FAFAFA;
+  --text-muted: #A1A1AA;
+  --purple: #8B5CF6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(9,9,11,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo span { color: var(--crimson); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-btn {
+  padding: 10px 24px;
+  background: var(--crimson);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.nav-btn:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: end;
+  padding: 0 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    linear-gradient(to bottom, transparent 0%, transparent 30%, var(--bg) 100%),
+    linear-gradient(to right, var(--bg) 0%, transparent 40%, transparent 60%, var(--bg) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(225,29,72,0.15), transparent 70%),
+    var(--bg);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(225,29,72,0.15);
+  border: 1px solid rgba(225,29,72,0.3);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--crimson);
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  letter-spacing: 3px;
+  line-height: 0.95;
+  margin-bottom: 1.2rem;
+  animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--crimson), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.btn-play {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: var(--crimson);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-family: 'Manrope', sans-serif;
+}
+
+.btn-play:hover { background: var(--crimson-dark); transform: scale(1.03); }
+
+.btn-play svg { width: 20px; height: 20px; fill: white; }
+
+.btn-ghost {
+  padding: 16px 32px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-family: 'Manrope', sans-serif;
+}
+
+.btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+.hero-meta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  animation: fadeIn 0.6s ease-out 0.4s both;
+}
+
+.meta-item { font-size: 0.85rem; color: var(--text-muted); }
+.meta-item strong { color: var(--text); font-size: 1.3rem; display: block; margin-bottom: 2px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TRENDING */
+.section {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+}
+
+.see-all {
+  color: var(--crimson);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.3s;
+}
+
+.see-all:hover { opacity: 0.7; }
+
+.movies-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+
+.movie-card {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s, box-shadow 0.4s;
+  aspect-ratio: 2/3;
+  background: var(--card);
+}
+
+.movie-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(225,29,72,0.15); }
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: linear-gradient(145deg, var(--card), var(--surface));
+  position: relative;
+}
+
+.movie-poster::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+}
+
+.movie-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1rem;
+  z-index: 2;
+}
+
+.movie-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.movie-info .genre { font-size: 0.75rem; color: var(--text-muted); }
+
+.movie-rating {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FBBF24;
+  z-index: 3;
+}
+
+/* PRICING */
+.pricing {
+  padding: 5rem 2rem;
+  background: var(--card);
+}
+
+.pricing-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.pricing > .pricing-inner > p {
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.plan {
+  background: var(--bg);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 24px;
+  padding: 2.5rem;
+  text-align: left;
+  transition: all 0.4s;
+  position: relative;
+}
+
+.plan.featured {
+  border-color: var(--crimson);
+  background: linear-gradient(165deg, rgba(225,29,72,0.08), var(--bg));
+}
+
+.plan.featured::before {
+  content: 'Популярный';
+  position: absolute;
+  top: -12px; right: 24px;
+  padding: 4px 16px;
+  background: var(--crimson);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.plan-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.plan-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+
+.plan-price span { font-size: 1.2rem; color: var(--text-muted); }
+
+.plan-period { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+.plan-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.plan-features li {
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plan-features li::before {
+  content: '✓';
+  color: var(--crimson);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.plan-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+}
+
+.plan-btn.primary { background: var(--crimson); color: white; }
+.plan-btn.primary:hover { background: var(--crimson-dark); }
+.plan-btn.outline { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.15); }
+.plan-btn.outline:hover { border-color: var(--crimson); color: var(--crimson); }
+
+/* FEATURES */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: border-color 0.3s;
+}
+
+.feature-card:hover { border-color: rgba(225,29,72,0.2); }
+
+.feature-icon {
+  width: 48px; height: 48px;
+  background: rgba(225,29,72,0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+.feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+/* FOOTER */
+footer {
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-brand .logo { display: inline-block; margin-bottom: 1rem; }
+.footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; max-width: 280px; }
+
+.footer-col h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.footer-col a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 4px 0;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--text); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .hero-meta { flex-wrap: wrap; gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">КИНО<span>СФЕРА</span></a>
+  <ul class="nav-links">
+    <li><a href="#trending">Фильмы</a></li>
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#pricing">Тарифы</a></li>
+  </ul>
+  <a href="#" class="nav-btn">Попробовать бесплатно</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🔥 Премьера недели</div>
+    <h1>СМОТРИ КИНО<br><span class="highlight">БЕЗ ГРАНИЦ</span></h1>
+    <p>Тысячи фильмов и сериалов в HD и 4K. Без рекламы, без ограничений. Смотри на любом устройстве</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-play">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        Смотреть бесплатно
+      </a>
+      <a href="#pricing" class="btn-ghost">Тарифы</a>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>12 000+</strong>Фильмов</div>
+      <div class="meta-item"><strong>4K HDR</strong>Качество</div>
+      <div class="meta-item"><strong>0 ₽</strong>Первый месяц</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trending">
+  <div class="section-header">
+    <h2>СЕЙЧАС В ТРЕНДЕ</h2>
+    <a href="#" class="see-all">Смотреть все →</a>
+  </div>
+  <div class="movies-row">
+    <div class="movie-card">
+      <div class="movie-poster">🎬</div>
+      <div class="movie-rating">★ 8.7</div>
+      <div class="movie-info"><h4>Последний рассвет</h4><div class="genre">Драма • 2026</div></div>
+    </div>
+    <div class="movie-card">
+      <div class="movie-poster">🚀</div>
+      <div class="movie-rating">★ 9.1</div>
+      <div class="movie-info"><h4>Горизонт событий</h4><div class="genre">Фантастика • 2026</div></div>
+    </div>
+    <div class="movie-card">
+      <div class="movie-poster">🔍</div>
+      <div class="movie-rating">★ 8.4</div>
+      <div class="movie-info"><h4>Тень правды</h4><div class="genre">Триллер • 2025</div></div>
+    </div>
+    <div class="movie-card">
+      <div class="movie-poster">❤️</div>
+      <div class="movie-rating">★ 7.9</div>
+      <div class="movie-info"><h4>Письма из Парижа</h4><div class="genre">Мелодрама • 2026</div></div>
+    </div>
+    <div class="movie-card">
+      <div class="movie-poster">⚔️</div>
+      <div class="movie-rating">★ 8.8</div>
+      <div class="movie-info"><h4>Код самурая</h4><div class="genre">Боевик • 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-header"><h2>ПОЧЕМУ КИНОСФЕРА</h2></div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Мгновенная загрузка</h3>
+      <p>Адаптивный стриминг без буферизации. Начинайте смотреть за 2 секунды</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Любое устройство</h3>
+      <p>Телефон, планшет, Smart TV, ноутбук — синхронизация между всеми устройствами</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Умные рекомендации</h3>
+      <p>AI подбирает фильмы на основе ваших предпочтений и настроения</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📥</div>
+      <h3>Скачивание офлайн</h3>
+      <p>Загружайте фильмы для просмотра без интернета — в дороге или в самолёте</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <h2>ВЫБЕРИ СВОЙ ТАРИФ</h2>
+    <p style="color:var(--text-muted); margin-bottom:3rem;">Первый месяц бесплатно на любом тарифе</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">Базовый</div>
+        <div class="plan-price">199₽ <span>/мес</span></div>
+        <div class="plan-period">HD качество</div>
+        <ul class="plan-features">
+          <li>HD 720p качество</li>
+          <li>1 устройство</li>
+          <li>Без рекламы</li>
+          <li>10 000+ фильмов</li>
+        </ul>
+        <button class="plan-btn outline">Начать бесплатно</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-name">Стандарт</div>
+        <div class="plan-price">399₽ <span>/мес</span></div>
+        <div class="plan-period">Full HD + скачивание</div>
+        <ul class="plan-features">
+          <li>Full HD 1080p</li>
+          <li>3 устройства</li>
+          <li>Скачивание офлайн</li>
+          <li>12 000+ фильмов</li>
+          <li>Ранний доступ к премьерам</li>
+        </ul>
+        <button class="plan-btn primary">Начать бесплатно</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Премиум</div>
+        <div class="plan-price">599₽ <span>/мес</span></div>
+        <div class="plan-period">4K HDR + всё включено</div>
+        <ul class="plan-features">
+          <li>4K HDR Dolby Vision</li>
+          <li>6 устройств</li>
+          <li>Dolby Atmos звук</li>
+          <li>Эксклюзивный контент</li>
+          <li>Семейный доступ</li>
+        </ul>
+        <button class="plan-btn outline">Начать бесплатно</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo">КИНО<span>СФЕРА</span></a>
+      <p>Лучший стриминговый сервис в России. Смотри кино без границ и без рекламы.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Каталог</h4>
+      <a href="#">Фильмы</a>
+      <a href="#">Сериалы</a>
+      <a href="#">Мультфильмы</a>
+      <a href="#">Документалки</a>
+    </div>
+    <div class="footer-col">
+      <h4>Помощь</h4>
+      <a href="#">FAQ</a>
+      <a href="#">Поддержка</a>
+      <a href="#">Устройства</a>
+    </div>
+    <div class="footer-col">
+      <h4>Компания</h4>
+      <a href="#">О нас</a>
+      <a href="#">Блог</a>
+      <a href="#">Вакансии</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 КиноСфера. Все права защищены.</div>
+</footer>
+
+</body>
+</html>
