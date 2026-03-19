@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIERE — Студия красоты</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #BE7B72;
+  --rose-light: #E8ADA4;
+  --rose-bg: #FDF5F3;
+  --cream: #FAF8F5;
+  --dark: #2C2220;
+  --text: #3D302E;
+  --text-light: #8A7572;
+  --border: #EDE4E0;
+  --gold: #C5A46C;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Nunito Sans',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+nav { padding:1.2rem 2rem; display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; }
+.logo { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:var(--dark); text-decoration:none; letter-spacing:3px; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a { color:var(--text-light); text-decoration:none; font-size:.9rem; font-weight:600; transition:color .3s; }
+.nav-links a:hover { color:var(--rose); }
+.nav-cta { padding:10px 28px; background:var(--rose); color:white; border-radius:100px; font-weight:700; font-size:.9rem; text-decoration:none; transition:all .3s; }
+.nav-cta:hover { background:var(--rose-light); transform:translateY(-1px); }
+
+.hero { max-width:1200px; margin:0 auto; padding:4rem 2rem 5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+.hero-left h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; line-height:1.1; color:var(--dark); margin-bottom:1.5rem; }
+.hero-left h1 .rose { color:var(--rose); }
+.hero-left p { font-size:1.1rem; color:var(--text-light); line-height:1.8; margin-bottom:2rem; max-width:460px; }
+.hero-btns { display:flex; gap:1rem; align-items:center; margin-bottom:2.5rem; }
+.btn-rose { padding:16px 36px; background:var(--rose); color:white; border:none; border-radius:100px; font-weight:700; font-size:1rem; cursor:pointer; text-decoration:none; transition:all .3s; font-family:'Nunito Sans',sans-serif; }
+.btn-rose:hover { background:var(--rose-light); transform:translateY(-2px); box-shadow:0 12px 32px rgba(190,123,114,0.25); }
+.btn-cream { padding:16px 36px; background:white; color:var(--dark); border:2px solid var(--border); border-radius:100px; font-weight:600; font-size:1rem; cursor:pointer; text-decoration:none; transition:all .3s; font-family:'Nunito Sans',sans-serif; }
+.btn-cream:hover { border-color:var(--rose); color:var(--rose); }
+.trust { display:flex; align-items:center; gap:1rem; }
+.trust-stars { color:var(--gold); font-size:1.1rem; letter-spacing:2px; }
+.trust-text { font-size:.85rem; color:var(--text-light); }
+.trust-text strong { color:var(--dark); }
+
+.hero-right { position:relative; }
+.hero-card { background:white; border-radius:28px; padding:2.5rem; box-shadow:0 20px 60px rgba(0,0,0,0.06); border:1px solid var(--border); }
+.hero-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
+.open-badge { padding:6px 16px; background:#ECFDF5; border-radius:100px; font-size:.8rem; font-weight:700; color:#059669; }
+.hero-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; color:var(--dark); margin-bottom:.5rem; }
+.hero-card .subtitle { font-size:.9rem; color:var(--text-light); margin-bottom:2rem; }
+
+.service-mini { display:flex; gap:12px; align-items:center; padding:14px; background:var(--rose-bg); border-radius:16px; margin-bottom:12px; }
+.service-mini-icon { width:44px; height:44px; background:var(--rose); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:white; flex-shrink:0; }
+.service-mini h4 { font-size:.95rem; font-weight:700; color:var(--dark); }
+.service-mini span { font-size:.8rem; color:var(--text-light); }
+.service-mini .price-tag { font-weight:700; color:var(--rose); font-size:.9rem; margin-left:auto; white-space:nowrap; }
+
+.floating-card { position:absolute; background:white; border-radius:16px; padding:14px 20px; box-shadow:0 8px 30px rgba(0,0,0,0.08); font-size:.85rem; font-weight:600; display:flex; align-items:center; gap:10px; animation:floatAnim 3s ease-in-out infinite; }
+.fc-reviews { bottom:-15px; left:-25px; color:var(--gold); }
+.fc-online { top:20px; right:-35px; color:var(--rose); }
+@keyframes floatAnim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.services { padding:5rem 2rem; max-width:1200px; margin:0 auto; }
+.stag { font-size:.8rem; text-transform:uppercase; letter-spacing:3px; color:var(--rose); font-weight:700; margin-bottom:.5rem; }
+.stitle { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:700; color:var(--dark); margin-bottom:3rem; }
+.services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
+.svc-card { background:white; border:1px solid var(--border); border-radius:24px; padding:2rem; transition:all .3s; }
+.svc-card:hover { border-color:var(--rose); transform:translateY(-4px); box-shadow:0 12px 40px rgba(190,123,114,0.08); }
+.svc-icon { width:52px; height:52px; background:var(--rose-bg); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.2rem; }
+.svc-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; color:var(--dark); margin-bottom:.5rem; }
+.svc-card p { font-size:.9rem; color:var(--text-light); line-height:1.6; margin-bottom:1rem; }
+.svc-price { font-weight:700; color:var(--rose); font-size:1rem; }
+
+.masters { padding:5rem 2rem; background:var(--rose-bg); }
+.masters-inner { max-width:1200px; margin:0 auto; }
+.masters-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+.master-card { background:white; border-radius:24px; padding:2rem; text-align:center; border:1px solid var(--border); }
+.master-avatar { width:80px; height:80px; border-radius:50%; margin:0 auto 1rem; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:700; color:white; }
+.master-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:700; color:var(--dark); margin-bottom:.3rem; }
+.master-card .role { font-size:.85rem; color:var(--text-light); margin-bottom:.5rem; }
+.master-card .exp { font-size:.8rem; color:var(--rose); font-weight:600; }
+
+.reviews { padding:5rem 2rem; max-width:1200px; margin:0 auto; }
+.reviews-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+.review { background:white; border:1px solid var(--border); border-radius:20px; padding:2rem; }
+.review-stars { color:var(--gold); margin-bottom:1rem; letter-spacing:2px; }
+.review-text { font-size:.95rem; color:var(--text); line-height:1.7; margin-bottom:1.5rem; font-style:italic; }
+.review-author { display:flex; align-items:center; gap:12px; }
+.review-av { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.8rem; color:white; }
+.review-name { font-weight:700; font-size:.9rem; color:var(--dark); }
+.review-date { font-size:.8rem; color:var(--text-light); }
+
+.cta { padding:5rem 2rem; background:var(--dark); text-align:center; position:relative; overflow:hidden; }
+.cta::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle,rgba(190,123,114,0.15),transparent 70%); }
+.cta h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,2.8rem); color:white; margin-bottom:1rem; position:relative; }
+.cta p { color:#A09090; font-size:1.05rem; margin-bottom:2rem; position:relative; }
+.cta .btn-rose { font-size:1.1rem; padding:18px 44px; position:relative; }
+
+footer { padding:2rem; text-align:center; font-size:.85rem; color:var(--text-light); border-top:1px solid var(--border); }
+
+@media(max-width:768px) { .hero{grid-template-columns:1fr} .nav-links{display:none} .floating-card{display:none} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">LUMIERE</a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#masters">Мастера</a></li>
+    <li><a href="#reviews">Отзывы</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Записаться</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Красота начинается с <span class="rose">заботы о себе</span></h1>
+    <p>Премиальная студия красоты в центре города. Индивидуальный подход, натуральная косметика и мастера с опытом более 10 лет</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-rose">Записаться онлайн</a>
+      <a href="#services" class="btn-cream">Наши услуги</a>
+    </div>
+    <div class="trust">
+      <div class="trust-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="trust-text"><strong>4.9</strong> на основе <strong>620+</strong> отзывов</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="open-badge">&#9679; Онлайн-запись</div>
+      </div>
+      <h3>Ближайшее свободное время</h3>
+      <div class="subtitle">Сегодня, 14:30 — Мастер Анна</div>
+      <div class="service-mini">
+        <div class="service-mini-icon">&#9986;</div>
+        <div><h4>Стрижка + укладка</h4><span>60 мин</span></div>
+        <div class="price-tag">3 500 &#8381;</div>
+      </div>
+      <div class="service-mini">
+        <div class="service-mini-icon">&#10024;</div>
+        <div><h4>Окрашивание</h4><span>120 мин</span></div>
+        <div class="price-tag">от 5 000 &#8381;</div>
+      </div>
+      <div class="service-mini">
+        <div class="service-mini-icon">&#128133;</div>
+        <div><h4>Маникюр + покрытие</h4><span>90 мин</span></div>
+        <div class="price-tag">2 800 &#8381;</div>
+      </div>
+    </div>
+    <div class="floating-card fc-reviews">&#9733; 4.9 — 620+ отзывов</div>
+    <div class="floating-card fc-online">&#9679; 3 мастера свободны</div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="stag">Услуги</div>
+  <h2 class="stitle">Всё для вашей красоты</h2>
+  <div class="services-grid">
+    <div class="svc-card"><div class="svc-icon">&#9986;</div><h3>Парикмахерские услуги</h3><p>Стрижки, укладки, окрашивание, кератиновое выпрямление, уходовые процедуры для волос</p><div class="svc-price">от 2 000 &#8381;</div></div>
+    <div class="svc-card"><div class="svc-icon">&#128133;</div><h3>Маникюр и педикюр</h3><p>Классический и аппаратный маникюр, гель-лак, наращивание, дизайн ногтей</p><div class="svc-price">от 1 800 &#8381;</div></div>
+    <div class="svc-card"><div class="svc-icon">&#10024;</div><h3>Косметология</h3><p>Чистка лица, пилинги, мезотерапия, биоревитализация, инъекционные процедуры</p><div class="svc-price">от 3 000 &#8381;</div></div>
+    <div class="svc-card"><div class="svc-icon">&#128134;</div><h3>Брови и ресницы</h3><p>Коррекция и окрашивание бровей, ламинирование и наращивание ресниц</p><div class="svc-price">от 1 500 &#8381;</div></div>
+    <div class="svc-card"><div class="svc-icon">&#128156;</div><h3>Массаж</h3><p>Расслабляющий, антицеллюлитный, лимфодренажный, массаж лица и зоны декольте</p><div class="svc-price">от 2 500 &#8381;</div></div>
+    <div class="svc-card"><div class="svc-icon">&#128142;</div><h3>Перманентный макияж</h3><p>Микроблейдинг бровей, перманент губ и век. Натуральный результат на 2-3 года</p><div class="svc-price">от 6 000 &#8381;</div></div>
+  </div>
+</section>
+
+<section class="masters" id="masters">
+  <div class="masters-inner">
+    <div class="stag">Команда</div>
+    <h2 class="stitle">Наши мастера</h2>
+    <div class="masters-grid">
+      <div class="master-card"><div class="master-avatar" style="background:var(--rose)">АК</div><h4>Анна Козлова</h4><div class="role">Стилист-колорист</div><div class="exp">12 лет опыта</div></div>
+      <div class="master-card"><div class="master-avatar" style="background:var(--gold)">ЕМ</div><h4>Елена Михайлова</h4><div class="role">Косметолог</div><div class="exp">8 лет опыта</div></div>
+      <div class="master-card"><div class="master-avatar" style="background:#8B7EC8">ДИ</div><h4>Дарья Иванова</h4><div class="role">Мастер маникюра</div><div class="exp">6 лет опыта</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="stag">Отзывы</div>
+  <h2 class="stitle">Нам доверяют</h2>
+  <div class="reviews-grid">
+    <div class="review"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="review-text">&#171;Хожу к Анне уже 3 года. Каждый раз попадание в цвет с первого раза. Атмосфера невероятная, всегда ухожу с улыбкой.&#187;</div><div class="review-author"><div class="review-av" style="background:var(--rose)">МС</div><div><div class="review-name">Мария С.</div><div class="review-date">Март 2026</div></div></div></div>
+    <div class="review"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="review-text">&#171;Лучшая косметология в городе! Процедура биоревитализации прошла комфортно, результат виден сразу. Обязательно вернусь.&#187;</div><div class="review-author"><div class="review-av" style="background:var(--gold)">ОВ</div><div><div class="review-name">Ольга В.</div><div class="review-date">Февраль 2026</div></div></div></div>
+    <div class="review"><div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="review-text">&#171;Делала перманент бровей. Результат естественный, как я и хотела. Спасибо команде за профессионализм и внимание к деталям!&#187;</div><div class="review-author"><div class="review-av" style="background:#8B7EC8">НА</div><div><div class="review-name">Наталья А.</div><div class="review-date">Январь 2026</div></div></div></div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Запишитесь <span style="color:var(--rose-light)">прямо сейчас</span></h2>
+  <p>Первый визит — скидка 15% на любую услугу</p>
+  <a href="#" class="btn-rose">Записаться онлайн</a>
+</section>
+
+<footer><p>&copy; 2026 LUMIERE. Студия красоты. Все права защищены.</p></footer>
+</body>
+</html>
